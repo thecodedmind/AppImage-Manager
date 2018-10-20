@@ -5,8 +5,9 @@ import tkinter.messagebox
 import socket
 import subprocess
 import os
-
+version = "18.10.18"
 appgui = None
+checkbox_show_grouped = False
 scriptdir = os.path.dirname(os.path.abspath(__file__))+"/"
 def getConfig():
 	with open("config.json") as f:
@@ -80,6 +81,13 @@ def open_config_win():
 	en.insert(0, basecfg['downloads_path'])
 	en2.insert(0, basecfg['apps_path'])
 
+def chkgrp():
+	global checkbox_show_grouped
+	if checkbox_show_grouped:
+		checkbox_show_grouped = False
+	else:
+		checkbox_show_grouped = True
+	
 def refresh_apps():
 	print("refreshing")
 	pth = getConfig()['apps_path']
@@ -123,12 +131,17 @@ def refresh_apps():
 	
 	for item in sorted(applist, reverse=True):
 		#print(item)
-		appgui.apps.insert(0, item)
+		grouped = False
 		for group in groups:
 			#print(groups[group])
 			if item in groups[group]:
 				cats[group].insert(0, item)
+				grouped = True
 				
+		if not grouped:
+			appgui.apps.insert(0, item)	
+		elif checkbox_show_grouped:
+			appgui.apps.insert(0, item)	
 	appgui.infolab.config(text=f"{count} appimages found.")
 		
 def run_app():
@@ -322,7 +335,7 @@ def onselect(evt):
 	except IndexError:
 		return
 	appgui.infolab.config(text=w.get(index))	
-			
+		
 class GuiMan:
 	def __init__(self):
 		self.online = internet()
@@ -360,6 +373,8 @@ command=group_man_main, cursor="hand1", width=5)
 		self.b_ins.grid(column=2, row=4, columnspan=2)
 		self.b_grp.grid(column=2, row=5)
 		self.b_gman.grid(column=3, row=5)
+		self.chk = tkinter.Checkbutton(self.mainwin, text="Show grouped apps", command=chkgrp)
+		self.chk.grid(row=6, column=2, columnspan=2)
 		self.mainwin.title("AppImage Manager")
 		self.config = getConfig()		
 		imgicon = tkinter.PhotoImage(file=os.path.join(scriptdir,'icon.png'))
