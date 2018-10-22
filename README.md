@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b24d3105ea34ab1a4414c8f0c31e51d)](https://www.codacy.com/app/Kaiz0r/AppImages-Manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kaiz0r/AppImages-Manager&amp;utm_campaign=Badge_Grade)
+
 # AppImages-Manager
 A little project i made for myself to sort my AppImages collection.
 I made it really just for myself to be able to sort and categorize my AppImages in an automated method, but I thought i'd share it incase anyone else finds it useful.
