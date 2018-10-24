@@ -1,8 +1,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5b24d3105ea34ab1a4414c8f0c31e51d)](https://www.codacy.com/app/Kaiz0r/AppImages-Manager?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Kaiz0r/AppImages-Manager&amp;utm_campaign=Badge_Grade)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![Discord](https://img.shields.io/discord/396716931962503169.svg?style=popout)](http://discord.gg/KUA8acb)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django.svg?style=popout-square)
-[![PyPI](https://img.shields.io/pypi/v/nine.svg?style=popout-square)](https://pypi.org/project/aim3/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/Django.svg)](https://pypi.org/project/aim3/)
+
 
 # AppImages-Manager
 A little project i made for myself to sort my AppImages collection.
