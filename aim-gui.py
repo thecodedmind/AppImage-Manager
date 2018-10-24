@@ -10,7 +10,7 @@ appgui = None
 checkbox_show_grouped = False
 scriptdir = os.path.dirname(os.path.abspath(__file__))+"/"
 installque = []
-
+app_pages = []
 def getConfig():
 	with open("config.json") as f:
 		return json.load(f)
@@ -95,6 +95,7 @@ def refresh_apps():
 	groups = getConfig()['groups']
 	for item in appgui.appscat.tabs():
 		appgui.appscat.forget(item)
+	app_pages.clear()
 		
 	appgui.mainframe = ttk.Frame(appgui.appscat)
 	
@@ -106,6 +107,7 @@ def refresh_apps():
 	appgui.apps.config(yscrollcommand=appgui.modules_scroll.set)	
 	appgui.apps.bind('<<ListboxSelect>>', onselect)
 	appgui.apps.grid(column=0, row=0, rowspan=10)
+	app_pages.append(appgui.apps)
 	cats = {}
 	for item in groups:
 		if len(groups[item]) > 0:
@@ -119,8 +121,9 @@ def refresh_apps():
 			apps.bind('<<ListboxSelect>>', onselect)
 			appgui.appscat.add(gf, text=item)
 			cats[item] = apps
-	
-	print(cats)
+			app_pages.append(apps)
+			
+	#print(cats)
 	appgui.apps.delete(0, tkinter.END)
 	count = 0
 	applist = []
@@ -146,11 +149,18 @@ def refresh_apps():
 	appgui.infolab.config(text=f"{count} appimages found.")
 		
 def run_app():
-	try:
-		index = int(appgui.apps.curselection()[0])
-	except IndexError:
+	page = None
+	for item in app_pages:
+		try:
+			index = int(item.curselection()[0])
+			page = item
+			print(item)
+		except IndexError:
+			pass
+	if page:
+		name = page.get(index)
+	else:
 		return
-	name = appgui.apps.get(index)
 	if tkinter.messagebox.askokcancel(title=f"Run {name}", message=f"Launch {name}?"):
 		#os.popen(getConfig()['apps_path']+name)
 		try:
@@ -180,6 +190,7 @@ def set_group(root, new_group, app):
 	groups[new_group] = cur_group
 	setConfig('groups', groups)
 	root.destroy()
+	refresh_apps()
 	
 def set_group_en(root, en, app):
 	new_group = en.get()
@@ -202,14 +213,21 @@ def set_group_en(root, en, app):
 	groups[new_group] = cur_group
 	setConfig('groups', groups)
 	root.destroy()
+	refresh_apps()
 	
 def group_app():
-	try:
-		index = int(appgui.apps.curselection()[0])
-	except IndexError:
+	page = None
+	for item in app_pages:
+		try:
+			index = int(item.curselection()[0])
+			page = item
+			print(item)
+		except IndexError:
+			pass
+	if page:
+		name = page.get(index)
+	else:
 		return
-	
-	name = appgui.apps.get(index)
 	w = tkinter.Tk()
 	w.title("Group")
 	en = tkinter.Entry(w)
@@ -242,6 +260,7 @@ def remove_group(root, apps, group):
 		setConfig('groups', g)
 	
 	root.destroy()
+	refresh_apps()
 	
 def group_man(root, group):
 	try:
@@ -278,11 +297,18 @@ def group_man_main():
 			i += 1
 	
 def delete_app():
-	try:
-		index = int(appgui.apps.curselection()[0])
-	except IndexError:
+	page = None
+	for item in app_pages:
+		try:
+			index = int(item.curselection()[0])
+			page = item
+			print(item)
+		except IndexError:
+			pass
+	if page:
+		name = page.get(index)
+	else:
 		return
-	name = appgui.apps.get(index)
 	if tkinter.messagebox.askokcancel(title=f"Delete {name}", message=f"Permenantly delete {name} from system?"):
 		res = subprocess.run(["rm", getConfig()['apps_path']+name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
