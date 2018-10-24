@@ -14,6 +14,12 @@ Delete removes the selected appimage file from the system.
 Group button allows you to sort the selected image in to categories or groups. Either enter a name in the box for a new group, or select a button for an existing group.
 Edit button lets you edit the groups. (For now, just used for removing images from a group.
 
+# CLI Version
+There is also a command-line version available. Run the aim-cli.py script for a non-gui way of quickly managing appimages.
+If run on its own, enters an interactive mode where it'll ask for commands as you go. If you run it with command arguments, it'll run the command then exit.
+aim-cli.py help shows all the commands
+Currently supported operations: finding apps in directory, running apps, installing apps from Downloads, automatically handling execution permissions on appimages.
+
 # Requires
 Just tkinter. Everything else should be stock python3 libraries.
 Only tested in python3.
